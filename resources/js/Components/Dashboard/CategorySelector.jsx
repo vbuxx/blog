@@ -22,11 +22,12 @@ const noCategory = () => {
     );
 };
 
-const CategorySelector = ({ categories, categoryState, categorySetState }) => {
-    //console.log('table data= ', categories);
+const CategorySelector = ({ categories, categorySetState, defaultValue = 87978 }) => {
+
+    const select = 87978;
     return (
-        <select onChange={(categoryState) => categorySetState(categoryState.target.value)} value={categoryState} className="select select-bordered w-1/2">
-            <option disabled value="">Select category</option>
+        <select onChange={(e) => categorySetState(e.target.value)} defaultValue={defaultValue} className="select select-bordered w-1/2">
+            <option disabled value={select}>Select category</option>
             {
                 !categories ? noCategory() : isCategory(categories)
             }

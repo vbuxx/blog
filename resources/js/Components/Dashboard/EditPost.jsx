@@ -3,11 +3,11 @@ import { Inertia } from '@inertiajs/inertia';
 import CategorySelector from "./CategorySelector";
 
 
-export default function EditPost({ props, categories, setEditButton }) {
+export default function EditPost({ props, categories, editButton, setEditButton }) {
     const [ID, setID] = useState(props.id);
     const [title, setTitle] = useState(props.title);
     const [content, setContent] = useState(props.content);
-    const [category, setCategory] = useState(props.category.id);
+    const [category, setCategory] = useState(props.category);
     const [image, setImage] = useState(props.image);
 
 
@@ -55,7 +55,7 @@ export default function EditPost({ props, categories, setEditButton }) {
 
                     <div className="py-4 space-y-4">
                         <input type="text" placeholder="Title" className="input input-bordered w-full max-w-full bg-inherit" onChange={(title) => setTitle(title.target.value)} defaultValue={title} />
-                        <CategorySelector categories={categories} categoryState={category} categorySetState={setCategory} />
+                        <CategorySelector categories={categories} categorySetState={setCategory} defaultValue={category} />
                         <textarea className="w-full h-96 textarea block textarea-bordered" placeholder="Content" onChange={(content) => setContent(content.target.value)} defaultValue={content} ></textarea>
 
                         <form className="flex items-center space-x-6">

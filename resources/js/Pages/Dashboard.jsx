@@ -38,7 +38,7 @@ export default function Dashboard(props) {
             id: articleOnUpdate,
             title: result[0].title,
             content: result[0].content,
-            category: result[0].category,
+            category: result[0].category.id,
             image: result[0].image,
         };
 
@@ -49,14 +49,14 @@ export default function Dashboard(props) {
 
     }, [editButton]);
 
-    console.log('cek data: ', props);
+    console.log('cek data: ', data);
 
     return (
         <Authenticated
             auth={props.auth}
             errors={props.errors}
         >
-            <FormPost data={props} />
+            <FormPost data={props} editButton={editButton} />
             <FormCategory data={props} />
             <Head title="Dashboard" />
             <div className="flex flex-col h-screen ">
@@ -98,6 +98,7 @@ export default function Dashboard(props) {
                                         {
                                             editButton &&
                                             <EditCategory props={categoryOnUpdate}
+                                                editButton={editButton}
                                                 setEditButton={setEditButton}
                                             />
                                         }

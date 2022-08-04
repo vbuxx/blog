@@ -7,8 +7,6 @@ use App\Http\Resources\ArticleCollection;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\User;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -64,12 +62,17 @@ class ArticleController extends Controller
                 'category'   => 'required|integer',
             ]);
 
-            $image = $request->file('image')->store('article-images');
+            // $image = $request->file('image')->store('article-images');
+
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('public/image/'), $filename);
+            $imageURL = 'http://localhost:8000/public/image/' . $filename;
 
             Article::create([
                 'title'         => $request->title,
                 'content'      => $request->content,
-                'image'         => $image,
+                'image'         => $imageURL,
                 'user_id'       => $user_id,
                 'category_id'   => $request->category,
             ]);
@@ -162,13 +165,16 @@ class ArticleController extends Controller
                 'category'   => 'required',
             ]);
 
-            $image = $request->file('image')->store('article-images');
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('public/image/'), $filename);
+            $imageURL = 'http://localhost:8000/public/image/' . $filename;
 
             Article::where('id', $request->id)
                 ->update([
                     'title'         => $request->title,
                     'content'      => $request->content,
-                    'image'         => $image,
+                    'image'         => $imageURL,
                     'user_id'       => $user_id,
                     'category_id'   => $request->category,
                 ]);
